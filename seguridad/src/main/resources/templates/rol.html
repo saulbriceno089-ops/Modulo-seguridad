@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexa - Rol</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #12002b, #3b0059, #df00ff, #00d4ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .app-card {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 450px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #df00ff, #a020f0);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            color: #00ffcc;
+            filter: drop-shadow(0 0 8px #00ffcc);
+        }
+
+        .view {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .barra-titulo {
+            background: linear-gradient(90deg, #df00ff, #a020f0);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 3px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(223, 0, 255, 0.4);
+        }
+
+        .botones-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .btn-small {
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(90deg, #df00ff, #a020f0);
+            padding: 14px 10px;
+            border-radius: 15px;
+            font-size: 15px;
+            box-shadow: 0 5px 15px rgba(160, 32, 240, 0.3);
+            width: 100%;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .btn-small.full-width {
+            grid-column: span 2;
+        }
+
+        .btn-volver {
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: none;
+        }
+
+        .btn-volver:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-card">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                Conexa
+            </div>
+        </header>
+
+        <!-- Se agregó la clase 'active' aquí para que cargue visible de inmediato -->
+        <div class="view active">
+            <div class="barra-titulo">ROL</div>
+            
+            <div class="botones-grid">
+                <a th:href="@{/rol_agregar}" class="btn-small">Agregar</a>
+                <a th:href="@{/rol_listar}" class="btn-small">Listar</a>
+                <a th:href="@{/}" class="btn-small full-width btn-volver">Volver</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

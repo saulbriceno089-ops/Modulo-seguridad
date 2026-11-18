@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Rol Fan Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .tarjeta-contenedor {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .cabecera-logo {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .contenido-principal {
+            width: 100%;
+        }
+
+        .titulo-seccion.titulo-solicitud {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+        }
+
+        .rejilla-formulario {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .campo {
+            margin-bottom: 5px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6b7280;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #a855f7;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+        }
+
+        .botones {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn-guardar {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-guardar:hover {
+            opacity: 0.9;
+        }
+
+        .btn-volver {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            background-color: #e5e7eb;
+            color: #374151;
+            transition: all 0.2s ease;
+        }
+
+        .btn-volver:hover {
+            background-color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="tarjeta-contenedor">
+        <div class="cabecera-logo"></div>
+        <div class="contenido-principal">
+            <h2 class="titulo-seccion titulo-solicitud">Datos Rol Fan Page</h2>
+            <form th:action="@{/rol_fan_page_actualizar}" th:object="${rolfanpage}" method="post" class="formulario">
+                <div class="rejilla-formulario">
+                    <!-- Campo oculto para el ID -->
+                    <input type="hidden" th:field="*{cod_rol_fan}"/>
+
+                    <!-- Select Persona -->
+                    <div class="campo">
+                        <label class="form-label" for="persona">Persona:</label>
+                        <select name="persona" id="persona" class="form-select cursor-pointer">
+                            <option value="">Seleccione...</option>
+                            <th:block th:each="p : ${personas}">
+                                <option th:value="${p.cod_per}" 
+                                        th:text="${p.cod_per}" 
+                                        th:selected="${rolfanpage.persona != null and rolfanpage.persona.cod_per == p.cod_per}">
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <!-- Select Fan Page -->
+                    <div class="campo">
+                        <label class="form-label" for="fanpage">Fan Page:</label>
+                        <select name="fanpage" id="fanpage" class="form-select cursor-pointer">
+                            <option value="">Seleccione...</option>
+                            <th:block th:each="fanpage : ${fanpages}">
+                                <option th:value="${fanpage.cod_fan_pag}" 
+                                        th:text="${fanpage.nom_fan_pag}" 
+                                        th:selected="${rolfanpage.fan_page != null and rolfanpage.fan_page.cod_fan_pag == fanpage.cod_fan_pag}">
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <!-- Select Rol -->
+                    <div class="campo">
+                        <label class="form-label" for="rol">Rol:</label>
+                        <select name="rol" id="rol" class="form-select cursor-pointer">
+                            <option value="">Seleccione...</option>
+                            <th:block th:each="rol : ${roles}">
+                                <option th:value="${rol.cod_rol}" 
+                                        th:text="${rol.nom_rol}" 
+                                        th:selected="${rolfanpage.rol != null and rolfanpage.rol.cod_rol == rol.cod_rol}">
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+
+                    <!-- Select Estatus -->
+                    <div class="campo">
+                        <label class="form-label" for="est_rol_fan">Estatus:</label>
+                        <select name="est_rol_fan" id="est_rol_fan" class="form-select cursor-pointer">
+                            <option value="A" th:selected="${rolfanpage.est_rol_fan == 'A'}">Activo (A)</option>
+                            <option value="I" th:selected="${rolfanpage.est_rol_fan == 'I'}">Inactivo (I)</option>
+                        </select>
+                    </div>
+
+                    <div class="botones">
+                        <button type="submit" class="btn-guardar">Actualizar</button>
+                        <a th:href="@{/rol_fan_page_listar}" class="btn-volver">Volver</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexa - Agregar Usuario</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f6;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .header-title {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #555555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #dddddd;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #d500f9;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-pink {
+            background: linear-gradient(90deg, #d500f9, #ff4081);
+        }
+
+        .btn-gray {
+            background: #dcdcdc;
+            color: #222222;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-title">Agregar Nuevo Usuario</div>
+
+        <form th:action="@{/usuario_guardar}" th:object="${usuario}" method="post">
+            <div class="form-group">
+                <label for="ali_usu">Alias:</label>
+                <input type="text" id="ali_usu" th:field="*{ali_usu}" required placeholder="Ingrese el alias">
+            </div>
+
+            <div class="form-group">
+                <label for="ema_usu">Correo Electrónico:</label>
+                <input type="email" id="ema_usu" th:field="*{ema_usu}" required placeholder="correo@ejemplo.com">
+            </div>
+
+            <div class="form-group">
+                <label for="cla_usu">Contraseña:</label>
+                <input type="password" id="cla_usu" th:field="*{cla_usu}" required placeholder="********">
+            </div>
+
+            <div class="form-group">
+                <label for="est_usu">Estatus:</label>
+                <select id="est_usu" th:field="*{est_usu}">
+                    <option value="A">Activo (A)</option>
+                    <option value="I">Inactivo (I)</option>
+                </select>
+            </div>
+
+            <div class="btn-container">
+                <a th:href="@{/usuario_listar}" class="btn btn-gray"><i class="fa-solid fa-arrow-left"></i> Cancelar</a>
+                <button type="submit" class="btn btn-pink"><i class="fa-solid fa-save"></i> Guardar</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

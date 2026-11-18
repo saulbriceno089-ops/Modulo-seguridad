@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexa - Listado de Usuarios</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f6;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        .header-title {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        /* Alerta de éxito */
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dddddd;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 700;
+            color: #555555;
+        }
+
+        .btn {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-pink {
+            background: linear-gradient(90deg, #d500f9, #ff4081);
+        }
+
+        .btn-warning {
+            background: #ffb300;
+        }
+
+        .btn-info {
+            background: #00bcd4;
+        }
+
+        .btn-danger {
+            background: #ff5252;
+        }
+
+        .btn-gray {
+            background: #dcdcdc;
+            color: #222222;
+        }
+        
+        .btn-gray:hover {
+            background: #cccccc;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-title">Listado de Usuarios</div>
+
+        <!-- Alerta de éxito dinámica -->
+        <div th:if="${mensaje}" class="alert-success">
+            <i class="fa-solid fa-circle-check"></i>
+            <span th:text="${mensaje}">Mensaje de éxito</span>
+        </div>
+
+        <div class="top-actions">
+            <a th:href="@{/usuario}" class="btn btn-gray"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+            <a th:href="@{/usuario_nuevo}" class="btn btn-pink"><i class="fa-solid fa-user-plus"></i> Nuevo Usuario</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Alias</th>
+                    <th>Email</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usu : ${usuarios}">
+                    <td th:text="${usu.cod_usu}">1</td>
+                    <td th:text="${usu.ali_usu}">Alias</td>
+                    <td th:text="${usu.ema_usu}">correo@email.com</td>
+                    <td th:text="${usu.est_usu}">A</td>
+                    <td>
+                        <a th:href="@{/usuario_ver/{id}(id=${usu.cod_usu})}" class="btn btn-warning"><i class="fa-solid fa-eye"></i> Ver</a>
+                        <a th:href="@{/usuario_editar/{id}(id=${usu.cod_usu})}" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i> Editar</a>
+                        <a th:href="@{/usuario_eliminar/{id}(id=${usu.cod_usu})}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

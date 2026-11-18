@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantallas Conexa Interactivas</title>
+    <style>
+        /* Importamos una fuente moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            /* Fondo animado y muy llamativo */
+            background: linear-gradient(-45deg, #12002b, #3b0059, #df00ff, #00d4ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Tarjeta principal con efecto Glassmorphism (Cristal) */
+        .app-card {
+            background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 450px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
+            overflow: hidden;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 35px 60px rgba(223, 0, 255, 0.3), inset 0 0 0 1px rgba(255,255,255,0.2);
+        }
+
+        .header {
+            background: linear-gradient(90deg, #df00ff, #a020f0);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efecto de brillo pasando por el encabezado */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(30deg) translateY(-100%);
+            animation: shine 6s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(30deg) translateY(-100%); }
+            20% { transform: rotate(30deg) translateY(100%); }
+            100% { transform: rotate(30deg) translateY(100%); }
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            color: #00ffcc;
+            filter: drop-shadow(0 0 8px #00ffcc);
+        }
+
+        /* Contenedor de vistas para transiciones absolutas */
+        .views-container {
+            position: relative;
+            height: 320px;
+        }
+
+        .view {
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8) translateY(30px);
+        }
+
+        /* Clase activa que hace que los elementos salten a la vista */
+        .active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Botón estético (No clickeable) */
+        .estetica-btn, .barra-titulo {
+            background: linear-gradient(90deg, #df00ff, #a020f0);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 3px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(223, 0, 255, 0.4);
+        }
+
+        /* Botones Interactivos y Enlaces */
+        button, .btn-action, .btn-small {
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none; /* Asegura que los enlaces no tengan subrayado */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Efecto de luz al pasar el mouse por los botones */
+        button::before, .btn-action::before, .btn-small::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        button:hover::before, .btn-action:hover::before, .btn-small:hover::before {
+            transform: translateX(100%);
+        }
+
+        button:hover, .btn-action:hover, .btn-small:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        button:active, .btn-action:active, .btn-small:active {
+            transform: translateY(2px) scale(0.95);
+        }
+
+        /* Botón principal */
+        .btn-action {
+            background: linear-gradient(90deg, #00d4ff, #df00ff);
+            padding: 15px 50px;
+            border-radius: 30px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4);
+            width: fit-content;
+        }
+
+        .btn-action:hover {
+            box-shadow: 0 15px 30px rgba(223, 0, 255, 0.6);
+        }
+
+        /* Grilla de seguridad */
+        .botones-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+        }
+
+        .btn-small {
+            background: linear-gradient(90deg, #df00ff, #a020f0);
+            padding: 12px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            box-shadow: 0 5px 15px rgba(160, 32, 240, 0.3);
+            width: 100%;
+        }
+
+        .btn-small.full-width {
+            grid-column: span 2;
+        }
+
+        .btn-volver {
+            background: rgba(255, 255, 255, 0.1);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: none;
+        }
+
+        .btn-volver:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-card">
+        <header class="header">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                Conexa
+            </div>
+        </header>
+
+        <div class="views-container">
+            <!-- Pantalla 1: Bienvenida -->
+            <div id="pantalla-bienvenida" class="view active">
+                <div class="estetica-btn">BIENVENIDOS</div>
+                <!-- Este botón te lleva a la pantalla de opciones de seguridad -->
+                <button class="btn-action" onclick="cambiarPantalla('pantalla-seguridad')">Seguridad</button>
+            </div>
+
+            <!-- Pantalla 2: Seguridad -->
+            <div id="pantalla-seguridad" class="view">
+                <div class="barra-titulo">SEGURIDAD</div>
+                
+                <div class="botones-grid">
+                    <!-- Enlaces interactivos que redirigen a las rutas -->
+                    <a th:href="@{/usuario}" class="btn-small">Usuario</a>
+                    <a th:href="@{/rol}" class="btn-small">Rol</a>
+                    <a th:href="@{/tipo_privacidad}" class="btn-small">Privacidad</a>
+                    <a th:href="@{/rol_fan_page}" class="btn-small">Rol Fan Page</a>
+                    
+                    <!-- Botón Volver con animación para regresar a la pantalla principal "BIENVENIDOS" -->
+                    <button class="btn-small full-width btn-volver" onclick="cambiarPantalla('pantalla-bienvenida')">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cambiarPantalla(idDestino) {
+            const views = document.querySelectorAll('.view');
+            
+            // Ocultamos todas las pantallas
+            views.forEach(view => {
+                view.classList.remove('active');
+            });
+
+            // Mostramos la nueva con un ligero retraso para que el efecto "rebote" (cubic-bezier) se note
+            const destino = document.getElementById(idDestino);
+            setTimeout(() => {
+                destino.classList.add('active');
+            }, 50);
+        }
+    </script>
+</body>
+</html>

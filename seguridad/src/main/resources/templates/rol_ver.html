@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexa - Ver Rol</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            padding: 25px 20px 18px;
+            text-align: center;
+            color: white;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 32px;
+            font-weight: 800;
+            color: #e0e0e0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            color: #00e5ff;
+            filter: drop-shadow(0 0 4px rgba(0,0,0,0.3));
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .card-body {
+            padding: 30px 50px 35px;
+        }
+
+        .banner-title {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #555555;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333333;
+            outline: none;
+            background-color: #ffffff;
+        }
+
+        .form-control:disabled {
+            background-color: #f2f2f2;
+            color: #666666;
+            cursor: not-allowed;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 75px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            padding: 9px 26px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-pink {
+            background: linear-gradient(90deg, #d500f9, #ff4081);
+            color: white;
+        }
+
+        .btn-gray {
+            background: #dcdcdc;
+            color: #222222;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="logo-container">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                Conexa
+            </div>
+            <div class="subtitle">Registro Rol</div>
+        </div>
+
+        <div class="card-body">
+            <div class="banner-title">VER ROL</div>
+
+            <form th:object="${rol}">
+                <!-- Campo oculto con el código del rol -->
+                <input type="hidden" id="cod_rol" name="cod_rol" th:field="*{cod_rol}">
+
+                <div class="form-group">
+                    <label for="nom_rol">Nombre Del Rol</label>
+                    <input type="text" id="nom_rol" name="nom_rol" class="form-control" th:field="*{nom_rol}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="des_rol">Descripcion del Rol</label>
+                    <textarea id="des_rol" name="des_rol" class="form-control" th:field="*{des_rol}" disabled></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="est_rol">Estatus</label>
+                    <select id="est_rol" name="est_rol" class="form-control" th:field="*{est_rol}" disabled>
+                        <option value="">Seleccione...</option>
+                        <option value="A">Activo</option>
+                        <option value="I">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-pink" disabled>Guardar</button>
+                    <button type="button" class="btn btn-pink" disabled>Limpiar</button>
+                    <a th:href="@{/rol_listar}" class="btn btn-gray">Volver</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexa - Listar Roles</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .contenedor-tarjeta {
+            background: #ffffff;
+            width: 100%;
+            max-width: 900px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .contenido-principal {
+            padding: 30px 40px;
+        }
+
+        .banner-title {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            max-width: 550px;
+            margin: 0 auto 25px;
+            text-transform: uppercase;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        thead tr {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eeeeee;
+            color: #555555;
+        }
+
+        tbody tr:hover {
+            background-color: #fdf5ff;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .empty-message {
+            padding: 20px;
+            color: #888888;
+        }
+
+        .boton-accion-tabla {
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 4px;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .boton-accion-tabla:hover {
+            background-color: #f1f1f1;
+            color: #d500f9;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            background: linear-gradient(90deg, #d500f9, #ff80ab);
+            color: white;
+            border: none;
+            padding: 9px 25px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor-tarjeta">
+        <div class="contenido-principal">
+            <div class="banner-title">ROLES REGISTRADOS</div>
+
+            <div class="contenedor-tabla">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Estatus</th>
+                            <th class="text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(roles)}">
+                            <td colspan="5" class="text-center empty-message">No hay roles registrados.</td>
+                        </tr>
+                        
+                        <tr th:each="rol : ${roles}">
+                            <td class="text-center" th:text="${rol.cod_rol}">1</td>
+                            <td class="text-center" th:text="${rol.nom_rol}">Rol1</td>
+                            <td class="text-center" th:text="${rol.des_rol}">Descripción</td>
+                            <td class="text-center" th:text="${rol.est_rol}">A</td>
+                            <td class="text-center">
+                                <a th:href="@{/rol_ver(cod_rol=${rol.cod_rol})}" class="boton-accion-tabla" title="Ver">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                <a th:href="@{/rol_editar(cod_rol=${rol.cod_rol})}" class="boton-accion-tabla" title="Editar">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a th:href="@{/rol_eliminar(cod_rol=${rol.cod_rol})}" class="boton-accion-tabla btn-eliminar-confirmar" title="Eliminar"
+                                   th:data-id="${rol.cod_rol}" th:data-nombre="${rol.nom_rol}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="button-group">
+                <a th:href="@{/rol_agregar}" class="btn-custom">Agregar</a>
+                <a th:href="@{/rol}" class="btn-custom">Rol</a>
+                <a th:href="@{/}" class="btn-custom">Menú Principal</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Ajustado exactamente a tus imágenes de referencia -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            /*[# th:if="${exito}"]*/
+            Swal.fire({
+                icon: 'success',
+                title: '¡Hecho!',
+                text: /*[[${exito}]]*/ '',
+                confirmButtonColor: 'rgba(172, 11, 236, 1)',
+                timer: 3000
+            });
+            /*[/]*/
+
+            /*[# th:if="${error}"]*/
+            Swal.fire({
+                icon: 'error',
+                title: '¡Lo siento!',
+                text: /*[[${error}]]*/ '',
+                confirmButtonColor: 'rgba(172, 11, 236, 1)',
+                timer: 3000
+            });
+            /*[/]*/
+
+            // Eliminar con SweetAlert2
+            const botonesEliminar = document.querySelectorAll('.btn-eliminar-confirmar');
+            botonesEliminar.forEach(boton => {
+                boton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Evita que se redirija de inmediato
+                    
+                    const urlDestino = this.getAttribute('href');
+                    const codRol = this.getAttribute('data-id');
+                    const nomRol = this.getAttribute('data-nombre');
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: `Vas a eliminar el rol: ${nomRol} (Código: ${codRol})`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: 'rgba(172, 11, 236, 1)',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = urlDestino;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
