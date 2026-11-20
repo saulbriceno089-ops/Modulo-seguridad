@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.seguridad.seguridad.modelo.TipoPrivacidad;
 import com.seguridad.seguridad.repositorio.RepositorioTipoPrivacidad;
 
-
 @Service 
 public class ServicioTipoPrivacidad {
 
